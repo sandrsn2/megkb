@@ -1,0 +1,23 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>#4471 · three problems, not one · support kb</title>
+<style>:root{--bg:#fbfaf7;--fg:#1d1d1b;--muted:#6b6a66;--line:#e3e0d8;--accent:#2f6f5e;--warn:#b4501f;--warn-bg:#fbeee6;--note-bg:#eef5f2}body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,sans-serif}.kb{max-width:760px;margin:0 auto;padding:2rem 16px 4rem}table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.92rem}th,td{border-bottom:1px solid var(--line);padding:.35rem .5rem;text-align:left}code{font-size:.88em}.meta{color:var(--muted);font-size:.85rem}.note{background:var(--note-bg);padding:.6rem 1rem;border-radius:6px}.wrong td{background:var(--warn-bg)}.stamp{margin-top:2rem;font:.85rem monospace;color:var(--muted)}.stamp b{color:var(--accent)}footer{margin-top:3rem;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line);padding-top:1rem}</style></head><body><div class="kb">
+<header><a href="/kb" class="meta">support desk · kb</a><h1>#4471 · three problems, not one</h1><p class="meta">owner <b>support desk</b> · accepted · reviewed 2026-10-28 · 0 days ago</p></header><main>
+<p>Ticket #4471 was merged and marked known as one date bug. Read report by report, it holds <strong>412 reports</strong> (the export repeats 15 of them; each id counted once) and <strong>three</strong> problems. Each now has its own ticket in the megkb repo.</p>
+<table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>what happens</th></tr></thead><tbody>
+<tr><td>1. Shared parser reads dates month first</td><td>374</td><td>11</td><td>A day-first tenant's date comes out with day and month swapped.</td></tr>
+<tr><td>2. booking-v3 prints a <code>MM/DD/YYYY</code> hint</td><td>33</td><td>3</td><td>Day-first tenants type month first because the form tells them to; the form then reads it their way. Only <code>form</code> reports.</td></tr>
+<tr><td>3. Date lands one day off</td><td>5</td><td>5</td><td>Not a swap. The day is off by one (a timezone or day-boundary bug). R-41202, R-41209, R-41236, R-41344, R-41620.</td></tr></tbody></table>
+<p>374 + 33 + 5 = 412.</p>
+<p class="note">Only problem 1 belongs to #4471. Problems 2 and 3 were merged into it by mistake and had no ticket of their own.</p>
+<h2>How the reports were sorted</h2><ul>
+<li><b>Cause comes from the tenant, not from intake.</b> <code>intakeTag</code> is a guess from the reporter's browser; the tenant's locale and booking form decide the cause (<code>causes.ts</code>).</li>
+<li><b>The one-day reports are a separate bug.</b> The desk notes mark five reports as one-day moves. <code>CauseTable</code> files them under their tenant's cause and only footnotes them, so its parser and hint rows count 379 and 33. Counted as a problem of their own, the numbers are 374, 33 and 5.</li>
+<li><b>Subject lines hide the problem.</b> Reports with the same subject have different causes, which is why merging by subject lumped them together.</li></ul>
+<h2>The table the desk sees</h2>
+<p><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes (as <code>CauseTable</code> renders it today)</p>
+<table><thead><tr><th>cause</th><th>reports</th><th>tagged as</th><th>tenants</th><th>seen</th><th></th></tr></thead><tbody>
+<tr><td><code>parser</code></td><td>379</td><td></td><td>11</td><td>2026-04-01 → 2026-10-04</td><td>#4471</td></tr>
+<tr class="wrong"><td><code>hint</code></td><td>33</td><td></td><td>3</td><td>2026-04-17 → 2026-09-22</td><td>not this ticket — no ticket of its own</td></tr></tbody></table>
+<p class="meta">5 reports read as a one-day move; filed under their tenant's cause (see problem 3).</p>
+<h2>Lessons</h2><ul><li>Merging by subject counts reports. It does not find causes. Read the tenant before you merge.</li><li>A footnote under a row is easy to miss. If a report is a different bug, give it its own row.</li></ul>
+<p class="stamp">desk ref <b>DR-P3TA-137R</b></p></main>
+<footer>Pages are written by people. Tables and charts are built from data at render time.</footer></div></body></html>

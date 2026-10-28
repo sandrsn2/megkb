@@ -1,0 +1,53 @@
+---
+layout: runbook
+title: '#4471 · three problems, not one'
+owner: support desk
+status: accepted
+reviewed: 2026-10-28
+signature: 'v1.eyJzdWIiOiI2NDMxIiwiYXVkIjoiY2hhbGxlbmdlOndoYXQtaXQtc2hvd3MiLCJpYXQiOjE3OTMyMjMzNDAsImV4cCI6MTc5MzMwOTc0MH0.7GcDjJ-ZCW34juSc_ppzcpuzXQkJbbI2N3UOEkQwVcs'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+Ticket #4471 was merged and marked known as one date bug. Read report by report, it holds
+**412 reports** (the export repeats 15 of them; each id counted once) and **three** problems.
+Each now has its own ticket in the megkb repo.
+
+| problem | reports | tenants | what happens |
+| --- | --- | --- | --- |
+| 1. Shared parser reads dates month first | 374 | 11 | A day-first tenant's date comes out with day and month swapped. |
+| 2. booking-v3 prints a `MM/DD/YYYY` hint | 33 | 3 | Day-first tenants type month first because the form tells them to; the form then reads it their way. Only `form` reports. |
+| 3. Date lands one day off | 5 | 5 | Not a swap. The day is off by one (a timezone or day-boundary bug). R-41202, R-41209, R-41236, R-41344, R-41620. |
+
+374 + 33 + 5 = 412.
+
+<Callout>
+Only problem 1 belongs to #4471. Problems 2 and 3 were merged into it by mistake and had no
+ticket of their own.
+</Callout>
+
+## How the reports were sorted
+
+- **Cause comes from the tenant, not from intake.** `intakeTag` is a guess from the reporter's
+  browser; the tenant's locale and booking form decide the cause (`causes.ts`).
+- **The one-day reports are a separate bug.** The desk notes (`desk-notes.json`) mark five reports
+  as one-day moves. `CauseTable` below files them under their tenant's cause and only footnotes
+  them, so its parser and hint rows count 379 and 33. Counted as a problem of their own, the
+  numbers are 374, 33 and 5.
+- **Subject lines hide the problem.** Reports with the same subject have different causes, which
+  is why [merging by subject](/kb/decisions/0001-dedupe-by-subject) lumped them together.
+
+## The table the desk sees
+
+<CauseTable ticket={4471} />
+
+## Lessons
+
+- Merging by subject counts reports. It does not find causes. Read the tenant before you merge.
+- A footnote under a row is easy to miss. If a report is a different bug, give it its own row.
+
+<RenderStamp {signature} />
