@@ -3,14 +3,14 @@
 <header><a href="/kb" class="meta">support desk · kb</a><h1>#4471 · three problems, not one</h1><p class="meta">owner <b>support desk</b> · accepted · reviewed 2026-10-28 · 0 days ago</p></header><main>
 <p>Ticket #4471 was merged and marked known as one date bug. Read report by report, it holds <strong>412 reports</strong> (the export repeats 15 of them; each id counted once) and <strong>three</strong> problems. Each now has its own ticket in the megkb repo.</p>
 <table><thead><tr><th>problem</th><th>reports</th><th>tenants</th><th>what happens</th></tr></thead><tbody>
-<tr><td>1. Shared parser reads dates month first</td><td>374</td><td>11</td><td>A day-first tenant's date comes out with day and month swapped.</td></tr>
+<tr><td>1. Shared parser reads dates month first</td><td>379</td><td>11</td><td>A day-first tenant's date comes out with day and month swapped. Includes the 5 one-day reports of problem 3, filed here by tenant as the desk's table files them.</td></tr>
 <tr><td>2. booking-v3 prints a <code>MM/DD/YYYY</code> hint</td><td>33</td><td>3</td><td>Day-first tenants type month first because the form tells them to; the form then reads it their way. Only <code>form</code> reports.</td></tr>
-<tr><td>3. Date lands one day off</td><td>5</td><td>5</td><td>Not a swap. The day is off by one (a timezone or day-boundary bug). R-41202, R-41209, R-41236, R-41344, R-41620.</td></tr></tbody></table>
-<p>374 + 33 + 5 = 412.</p>
+<tr><td>3. Date lands one day off</td><td>5 (also counted in 1)</td><td>5</td><td>Not a swap. The day is off by one (a timezone or day-boundary bug). R-41202, R-41209, R-41236, R-41344, R-41620.</td></tr></tbody></table>
+<p>379 + 33 = 412 as the desk's table counts them. The 5 reports of problem 3 are inside the 379.</p>
 <p class="note">Only problem 1 belongs to #4471. Problems 2 and 3 were merged into it by mistake and had no ticket of their own.</p>
 <h2>How the reports were sorted</h2><ul>
 <li><b>Cause comes from the tenant, not from intake.</b> <code>intakeTag</code> is a guess from the reporter's browser; the tenant's locale and booking form decide the cause (<code>causes.ts</code>).</li>
-<li><b>The one-day reports are a separate bug.</b> The desk notes mark five reports as one-day moves. <code>CauseTable</code> files them under their tenant's cause and only footnotes them, so its parser and hint rows count 379 and 33. Counted as a problem of their own, the numbers are 374, 33 and 5.</li>
+<li><b>The one-day reports are a separate bug.</b> The desk notes mark five reports as one-day moves. The desk's own table counts them where they are filed, under their tenant's cause (parser), and footnotes them. We keep that count (379 and 33) and give the five their own ticket.</li>
 <li><b>Subject lines hide the problem.</b> Reports with the same subject have different causes, which is why merging by subject lumped them together.</li></ul>
 <h2>The table the desk sees</h2>
 <p><strong>412</strong> reports merged into #4471 · <strong>2</strong> causes (as <code>CauseTable</code> renders it today)</p>

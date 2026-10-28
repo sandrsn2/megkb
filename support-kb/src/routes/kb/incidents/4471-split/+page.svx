@@ -19,11 +19,11 @@ Each now has its own ticket in the megkb repo.
 
 | problem | reports | tenants | what happens |
 | --- | --- | --- | --- |
-| 1. Shared parser reads dates month first | 374 | 11 | A day-first tenant's date comes out with day and month swapped. |
+| 1. Shared parser reads dates month first | 379 | 11 | A day-first tenant's date comes out with day and month swapped. Includes the 5 one-day reports of problem 3, filed here by tenant as the desk's table files them. |
 | 2. booking-v3 prints a `MM/DD/YYYY` hint | 33 | 3 | Day-first tenants type month first because the form tells them to; the form then reads it their way. Only `form` reports. |
-| 3. Date lands one day off | 5 | 5 | Not a swap. The day is off by one (a timezone or day-boundary bug). R-41202, R-41209, R-41236, R-41344, R-41620. |
+| 3. Date lands one day off | 5 (also counted in 1) | 5 | Not a swap. The day is off by one (a timezone or day-boundary bug). R-41202, R-41209, R-41236, R-41344, R-41620. |
 
-374 + 33 + 5 = 412.
+379 + 33 = 412 as the desk's table counts them. The 5 reports of problem 3 are inside the 379.
 
 <Callout>
 Only problem 1 belongs to #4471. Problems 2 and 3 were merged into it by mistake and had no
@@ -35,9 +35,9 @@ ticket of their own.
 - **Cause comes from the tenant, not from intake.** `intakeTag` is a guess from the reporter's
   browser; the tenant's locale and booking form decide the cause (`causes.ts`).
 - **The one-day reports are a separate bug.** The desk notes (`desk-notes.json`) mark five reports
-  as one-day moves. `CauseTable` below files them under their tenant's cause and only footnotes
-  them, so its parser and hint rows count 379 and 33. Counted as a problem of their own, the
-  numbers are 374, 33 and 5.
+  as one-day moves. The desk's own table counts them where they are filed, under their tenant's
+  cause (parser), and footnotes them. We keep that count (379 and 33) and give the five their
+  own ticket.
 - **Subject lines hide the problem.** Reports with the same subject have different causes, which
   is why [merging by subject](/kb/decisions/0001-dedupe-by-subject) lumped them together.
 
